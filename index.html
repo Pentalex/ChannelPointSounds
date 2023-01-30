@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Channel Point Filters URL Generator</title>
+    <title>Channel Point Sounds URL Generator</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/fontawesome.min.css">
@@ -27,17 +27,17 @@
                 <input class="form-control" id="twitchtoken" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                     aria-describedby="getoauth" name="oauth">
                 <small id="getoauth" class="form-text text-muted"><a
-                        href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=f3l7ldc6zwtdunaoe53rzms4icn0pl&redirect_uri=https://pentalex.github.io/ChannelPointFilters/&scope=channel:read:redemptions">Get
+                        href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=f3l7ldc6zwtdunaoe53rzms4icn0pl&redirect_uri=https://pentalex.github.io/ChannelPointSounds/&scope=channel:read:redemptions">Get
                         Token</a></small>
             </div>
             <div class="form-group">
                 <label for="obspw">Twitch Reward Name</label>
-                <input class="form-control" id="rewardname" name="rewardname" placeholder="Mic Filter">
+                <input class="form-control" id="rewardname" name="rewardname" placeholder="Play Sound">
                 <small id="sourceHelp" class="form-text text-muted">Exact name of the channel point reward that people
-                    will use to enable filters.</small>
+                    will use to play the sound.</small>
             </div>
             <div class="form-group">
-                <label for="mp3">URL to MP3 that plays on redeem.</label>
+                <label for="mp3">A direct URL to the MP3 that plays on redeem. (URL must end with .mp3)</label>
                 <input class="form-control" id="mp3" name="mp3">
             </div>
             <button type="button" id="generate" class="btn btn-primary">Generate URL</button>
