@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Channel Point Filters URL Generator</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/fontawesome.min.css">
+
+</head>
+<style>
+    body.swal2-shown>[aria-hidden="true"] {
+        transition: 0.1s filter;
+        filter: blur(10px);
+    }
+</style>
+
+<body>
+    <div class="d-flex justify-content-center justify-content-center mt-5">
+        <form>
+            <div class="form-group">
+                <label for="twitchtoken">Twitch OAuth Token</label>
+                <input class="form-control" id="twitchtoken" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                    aria-describedby="getoauth" name="oauth">
+                <small id="getoauth" class="form-text text-muted"><a
+                        href="https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=f3l7ldc6zwtdunaoe53rzms4icn0pl&redirect_uri=https://pentalex.github.io/ChannelPointFilters/&scope=channel:read:redemptions">Get
+                        Token</a></small>
+            </div>
+            <div class="form-group">
+                <label for="obspw">Twitch Reward Name</label>
+                <input class="form-control" id="rewardname" name="rewardname" placeholder="Mic Filter">
+                <small id="sourceHelp" class="form-text text-muted">Exact name of the channel point reward that people
+                    will use to enable filters.</small>
+            </div>
+            <div class="form-group">
+                <label for="mp3">URL to MP3 that plays on redeem.</label>
+                <input class="form-control" id="mp3" name="mp3">
+            </div>
+            <button type="button" id="generate" class="btn btn-primary">Generate URL</button>
+            <hr>
+
+
+        </form>
+
+
+    </div>
+
+    <div class="d-flex justify-content-center justify-content-center mt-5">
+        <div class="input-group mt-5 col-7" id="generatedBox">
+            <input type="text" min="1" max="10000" class="form-control" id="generated" name="generated"
+                placeholder="Please hit generate URL" readonly>
+            <span class="input-group-btn ml-2">
+                <button type="button" id="copy" class="btn btn-primary">Copy</button>
+            </span>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- TODO: Here goes your content! -->
+
+
+
+    <!-- Including Bootstrap JS (with its jQuery dependency) so that dynamic components work -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+    </script>
+    <script>
+        var hash = window.location.hash;
+        const button = document.getElementById("generate");
+        const copybutton = document.getElementById("copy");
+        copybutton.onclick = function () {
+            navigator.clipboard.writeText(document.getElementById("generated").value).then(() => {
+                console.log('Content copied to clipboard');
+                copybutton.innerHTML = "Copied!"
+            }, () => {
+                console.error('Failed to copy');
+                /* Rejected - text failed to copy to the clipboard */
+            });
+        }
+
+        if (hash) {
+            var oauthbox = document.getElementById("twitchtoken");
+            oauthbox.value = hash.substring(14, 44);
+            oauthbox.readOnly = true;
+        } else {
+            Swal.fire({
+                title: 'Streamer Warning!',
+                text: 'DO NOT DO THIS SETUP ON STREAM. YOU WILL LEAK.',
+                icon: 'warning',
+                confirmButtonText: 'Understood.'
+            })
+        }
+
+        button.onclick = function () {
+            const token = document.getElementById("twitchtoken").value;
+            var rewardname = document.getElementById("rewardname").value;
+            var mp3 = document.getElementById("mp3").value;
+            if (rewardname.length == 0) {
+                rewardname = "Play Sound";
+            }
+
+            var url = new URL(window.location.protocol + window.location.host + '/ChannelPointSounds/app.html');
+            url.searchParams.append('token', token);
+            url.searchParams.append('rewardname', rewardname);
+            url.searchParams.append('mp3', mp3);
+
+            document.getElementById("generated").value = url;
+            document.getElementById("generatedBox").style.visibility = "visible";
+        }
+    </script>
+</body>
+
+</html>
